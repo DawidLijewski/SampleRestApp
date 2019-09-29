@@ -2,18 +2,17 @@ package lijewski.songapp.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import lijewski.songapp.R
 import lijewski.songapp.presentation.main.dashboard.DashboardFragment
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : AppCompatActivity(), HasAndroidInjector {
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -29,5 +28,5 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
     }
 
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
+    override fun androidInjector() = dispatchingAndroidInjector
 }

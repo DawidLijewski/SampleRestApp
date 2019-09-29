@@ -21,7 +21,7 @@ class SearchDialog : AppCompatDialogFragment() {
     private lateinit var etSearch: EditText
     private lateinit var cbRemote: CheckBox
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         searchDialogContract = targetFragment as SearchDialogContract
@@ -34,7 +34,7 @@ class SearchDialog : AppCompatDialogFragment() {
 
     private fun setDialogTitle() {
         val title = getString(R.string.search_title)
-        dialog.setTitle(title)
+        dialog?.setTitle(title)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
