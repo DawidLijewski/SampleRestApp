@@ -34,7 +34,7 @@ class DashboardFragment : Fragment(), SearchDialogContract {
 
     private lateinit var dashboardViewModel: DashboardViewModel
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
     }
@@ -81,7 +81,7 @@ class DashboardFragment : Fragment(), SearchDialogContract {
     private fun openSearchDialog() {
         val searchDialog = SearchDialog()
         searchDialog.setTargetFragment(this, 0)
-        searchDialog.show(fragmentManager, SearchDialog.TAG)
+        fragmentManager?.let { searchDialog.show(it, SearchDialog.TAG) }
     }
 
     private fun showErrorToast() {
