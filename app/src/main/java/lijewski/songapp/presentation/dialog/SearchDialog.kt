@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.lifecycle.ViewModelProviders
 import lijewski.songapp.R
 
 class SearchDialog : AppCompatDialogFragment() {
@@ -16,7 +17,7 @@ class SearchDialog : AppCompatDialogFragment() {
         const val TAG: String = "SearchDialog"
     }
 
-    private lateinit var searchDialogContract: SearchDialogContract
+    private lateinit var searchViewModel: SearchViewModel
 
     private lateinit var etSearch: EditText
     private lateinit var cbRemote: CheckBox
@@ -24,7 +25,9 @@ class SearchDialog : AppCompatDialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        searchDialogContract = targetFragment as SearchDialogContract
+        searchViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        } ?: throw Exception("Invalid Activity for SearchViewModel")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,7 +51,9 @@ class SearchDialog : AppCompatDialogFragment() {
             if (textSearch.isEmpty()) {
                 view.findViewById<View>(R.id.text_error).visibility = View.VISIBLE
             } else {
-                searchDialogContract.onSearchDataReceived(textSearch)
+                //TODO: add databinding
+                searchViewModel.song.value?.artist = textSearch
+                searchViewModel.querySong()
                 dismiss()
             }
         }
