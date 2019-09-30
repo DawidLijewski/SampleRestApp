@@ -10,6 +10,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.ViewModelProviders
+import lijewski.domain.entity.Song
 import lijewski.songapp.R
 
 class SearchDialog : AppCompatDialogFragment() {
@@ -52,7 +53,7 @@ class SearchDialog : AppCompatDialogFragment() {
                 view.findViewById<View>(R.id.text_error).visibility = View.VISIBLE
             } else {
                 //TODO: add databinding
-                searchViewModel.song.value?.artist = textSearch
+                searchViewModel.song.value = Song( textSearch, "", "")
                 searchViewModel.querySong()
                 dismiss()
             }

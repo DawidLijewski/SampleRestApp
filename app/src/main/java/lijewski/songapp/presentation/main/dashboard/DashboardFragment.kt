@@ -72,8 +72,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        searchViewModel.song.observe(viewLifecycleOwner, Observer {
-            onSearchDataReceived(it)
+        searchViewModel.eventQuerySong.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                onSearchDataReceived(it)
+            }
         })
 
         dashboardViewModel.eventGetSearchData.observe(viewLifecycleOwner, Observer {
