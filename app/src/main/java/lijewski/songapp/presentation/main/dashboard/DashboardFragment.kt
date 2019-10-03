@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.AndroidSupportInjection
 import lijewski.domain.entity.Song
+import lijewski.domain.entity.SongQuery
 import lijewski.songapp.R
 import lijewski.songapp.databinding.FragmentDashboardBinding
 import lijewski.songapp.presentation.adapter.SongListAdapter
@@ -106,8 +107,8 @@ class DashboardFragment : Fragment() {
         toast.show()
     }
 
-    private fun onSearchDataReceived(data: Song) {
-        dashboardViewModel.fetchSongsList(data.artist)
+    private fun onSearchDataReceived(data: SongQuery) {
+        dashboardViewModel.fetchSongsList(data)
     }
 
     private fun onSongListUpdate(list: List<Song>) {

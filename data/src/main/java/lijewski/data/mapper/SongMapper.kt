@@ -13,7 +13,6 @@ class SongMapper @Inject constructor() {
         val formatter = SimpleDateFormat("yyyy", Locale.US)
         val parsedYear = formatter.format(parser.parse(responseSong.releaseDate) ?: "")
 
-
         return Song(
             artist = responseSong.artistName,
             title = responseSong.trackName,

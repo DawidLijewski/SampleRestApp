@@ -7,5 +7,7 @@ import retrofit2.http.Query
 
 interface RemoteEndpoint {
     @GET("search")
-    fun getSongsList(@Query("term") artistName: String): Single<RemoteResponse>
+    fun getSearchResults(@Query("term") term: String,
+                         @Query("country") country: String,
+                         @Query("media") media: String): Single<RemoteResponse>
 }

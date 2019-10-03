@@ -10,7 +10,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.ViewModelProviders
-import lijewski.domain.entity.Song
 import lijewski.songapp.R
 
 class SearchDialog : AppCompatDialogFragment() {
@@ -45,15 +44,13 @@ class SearchDialog : AppCompatDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         etSearch = view.findViewById(R.id.search_edit_text)
-        cbRemote = view.findViewById(R.id.checkbox_remote)
         val btnSearch = view.findViewById<Button>(R.id.btn_search)
         btnSearch.setOnClickListener {
             val textSearch = etSearch.text.toString()
             if (textSearch.isEmpty()) {
                 view.findViewById<View>(R.id.text_error).visibility = View.VISIBLE
             } else {
-                //TODO: add databinding
-                searchViewModel.song.value = Song( textSearch, "", "")
+                searchViewModel.term.value = textSearch
                 searchViewModel.querySong()
                 dismiss()
             }
