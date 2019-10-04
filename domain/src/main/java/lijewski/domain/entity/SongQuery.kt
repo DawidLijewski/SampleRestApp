@@ -5,6 +5,6 @@ package lijewski.domain.entity
  */
 data class SongQuery (
     val term: String,
-    val country: String,
+    val country: String?,
     val media: MediaType
 )

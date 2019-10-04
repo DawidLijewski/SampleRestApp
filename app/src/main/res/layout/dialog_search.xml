@@ -40,7 +40,7 @@
             android:textColor="@android:color/holo_red_light"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_edit_text"
-            app:visibleInvisible="@{!viewModel.isQueryDataCorrect}"
+            app:visibleInvisible="@{viewModel.isQueryDataError}"
             tools:visibility="visible" />
 
         <Button

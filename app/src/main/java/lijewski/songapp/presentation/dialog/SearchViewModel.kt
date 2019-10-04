@@ -12,19 +12,25 @@ class SearchViewModel : ViewModel() {
     val country = MutableLiveData<String>()
     val media = MutableLiveData<MediaType>()
 
-    val isQueryDataCorrect = ObservableBoolean(true)
+    val isQueryDataError = ObservableBoolean(false)
 
     val eventQuerySong = MutableLiveData<Event<SongQuery>>()
 
-    fun querySong(): Boolean {
+    fun isQueryDataCorrect(): Boolean {
         return if (term.value.isNullOrBlank()) {
-            isQueryDataCorrect.set(false)
+            isQueryDataError.set(true)
             false
         } else {
-            val query = SongQuery(term.value!!, "", MediaType.ALL)
-            eventQuerySong.value = Event(query)
-            isQueryDataCorrect.set(true)
+            isQueryDataError.set(false)
             true
+        }
+    }
+
+    fun querySong() {
+        term.value?.let {
+            val query = SongQuery(it, null, MediaType.ALL)
+            eventQuerySong.value = Event(query)
+            isQueryDataError.set(true)
         }
     }
 }
