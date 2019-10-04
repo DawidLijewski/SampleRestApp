@@ -2,6 +2,7 @@ package lijewski.domain.usecase
 
 import io.reactivex.Observable
 import lijewski.domain.entity.Song
+import lijewski.domain.entity.SongQuery
 import lijewski.domain.repository.RemoteRepository
 import javax.inject.Inject
 
@@ -13,8 +14,8 @@ class RemoteSongListUseCase @Inject constructor(private val remoteRepository: Re
         data class Failure(val throwable: Throwable) : Result()
     }
 
-    fun getSongs(artistName: String): Observable<Result> {
-        return remoteRepository.getRemoteSongList(artistName)
+    fun getSongs(songQuery: SongQuery): Observable<Result> {
+        return remoteRepository.getSongList(songQuery)
             .toObservable()
             .map { Result.Success(it) as Result }
             .onErrorReturn { Result.Failure(it) }

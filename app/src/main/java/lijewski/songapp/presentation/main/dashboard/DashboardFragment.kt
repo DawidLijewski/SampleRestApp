@@ -12,14 +12,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.AndroidSupportInjection
+import lijewski.domain.entity.Song
+import lijewski.domain.entity.SongQuery
 import lijewski.songapp.R
 import lijewski.songapp.databinding.FragmentDashboardBinding
 import lijewski.songapp.presentation.adapter.SongListAdapter
 import lijewski.songapp.presentation.dialog.SearchDialog
-import lijewski.songapp.presentation.dialog.SearchDialogContract
+import lijewski.songapp.presentation.dialog.SearchViewModel
 import javax.inject.Inject
 
-class DashboardFragment : Fragment(), SearchDialogContract {
+class DashboardFragment : Fragment() {
     companion object {
         const val TAG: String = "DashboardFragment"
     }
@@ -34,20 +36,31 @@ class DashboardFragment : Fragment(), SearchDialogContract {
 
     private lateinit var dashboardViewModel: DashboardViewModel
 
+    private lateinit var searchViewModel: SearchViewModel
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        dashboardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel::class.java)
+        dashboardViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel::class.java)
+
+        searchViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        } ?: throw Exception("Invalid Activity for SearchViewModel")
 
         binding = DataBindingUtil.inflate<FragmentDashboardBinding>(
             inflater, R.layout.fragment_dashboard, container, false
         ).apply {
             viewModel = dashboardViewModel
-            setLifecycleOwner(this@DashboardFragment)
+            lifecycleOwner = this@DashboardFragment
             recyclerView.adapter = adapter
         }
 
@@ -60,21 +73,26 @@ class DashboardFragment : Fragment(), SearchDialogContract {
     }
 
     private fun observeViewModel() {
-        dashboardViewModel.eventGetSearchData.observe(this, Observer {
+        searchViewModel.eventQuerySong.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                onSearchDataReceived(it)
+            }
+        })
+
+        dashboardViewModel.eventGetSearchData.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 openSearchDialog()
             }
         })
 
-        dashboardViewModel.eventErrorDownloading.observe(this, Observer {
+        dashboardViewModel.eventErrorDownloading.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 showErrorToast()
             }
         })
 
-        dashboardViewModel.songs.observe(this, Observer {
-            adapter.updateSongList(it)
-            binding.recyclerView.smoothScrollToPosition(0)
+        dashboardViewModel.songs.observe(viewLifecycleOwner, Observer {
+            onSongListUpdate(it)
         })
     }
 
@@ -89,9 +107,12 @@ class DashboardFragment : Fragment(), SearchDialogContract {
         toast.show()
     }
 
-    override fun onSearchDataReceived(data: String) {
+    private fun onSearchDataReceived(data: SongQuery) {
         dashboardViewModel.fetchSongsList(data)
-        //TODO: handle data as LiveData and ditch onSearchDataReceived
-        //TODO: prepare code for handling more data, array/pojo/enum/sealed
+    }
+
+    private fun onSongListUpdate(list: List<Song>) {
+        adapter.updateSongList(list)
+        binding.recyclerView.smoothScrollToPosition(0)
     }
 }

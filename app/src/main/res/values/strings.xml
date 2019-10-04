@@ -5,9 +5,8 @@
     <string name="error_fetch">Failed to fetch song list</string>
 
     <!-- Search Dialog -->
-    <string name="search_title">Search for songs</string>
     <string name="search_remote">Search remote</string>
-    <string name="search_hint">Artist\'s name</string>
+    <string name="search_hint">Search query</string>
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>
     <string name="search_no_char">Search query cannot be empty!</string>

@@ -8,6 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import lijewski.domain.entity.Song
+import lijewski.domain.entity.SongQuery
 import lijewski.domain.usecase.RemoteSongListUseCase
 import lijewski.songapp.presentation.internal.Event
 import timber.log.Timber
@@ -25,8 +26,8 @@ class DashboardViewModel @Inject constructor(
         disposables.clear()
     }
 
-    fun fetchSongsList(artistName: String) {
-        remoteSongListUseCase.getSongs(artistName)
+    fun fetchSongsList(songQuery: SongQuery) {
+        remoteSongListUseCase.getSongs(songQuery)
             .subscribeOn(Schedulers.io())
             .doOnSubscribe { isLoading.set(true) }
             .observeOn(AndroidSchedulers.mainThread())
