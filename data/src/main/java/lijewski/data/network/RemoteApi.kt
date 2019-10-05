@@ -11,6 +11,6 @@ class RemoteApi @Inject constructor(private val remoteEndpoint: RemoteEndpoint) 
         return remoteEndpoint.getSearchResults(
             songQuery.term,
             songQuery.country,
-            songQuery.media.mediaType)
+            songQuery.media.value)
     }
 }

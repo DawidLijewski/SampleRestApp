@@ -1,6 +1,6 @@
 package lijewski.domain.entity
 
-enum class MediaType(val mediaType: String) {
+enum class MediaType(val value: String) {
     ALL("all"),
     MOVIE("movie"),
     PODCAST("podcast"),

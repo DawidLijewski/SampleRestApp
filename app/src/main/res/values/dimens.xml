@@ -1,4 +1,16 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="card_padding">8dp</dimen>
+
+    <!-- Result's card dimens -->
+    <dimen name="card_corner_radius">4dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_content_padding">4dp</dimen>
+    <dimen name="card_text_size">12sp</dimen>
+    <dimen name="card_text_header_size">14sp</dimen>
+    <dimen name="card_artwork_width">100dp</dimen>
+    <dimen name="card_artwork_height">100dp</dimen>
+
+    <dimen name="list_side_padding">4dp</dimen>
+
 </resources>

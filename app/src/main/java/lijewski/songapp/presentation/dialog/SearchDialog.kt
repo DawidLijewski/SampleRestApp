@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -62,5 +63,12 @@ class SearchDialog : AppCompatDialogFragment() {
         }
         val btnCancel = view.findViewById<Button>(R.id.btn_cancel)
         btnCancel.setOnClickListener { dismiss() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val etSearch: EditText? = view?.findViewById(R.id.search_edit_text)
+        etSearch?.setSelection(etSearch.text.length)
     }
 }
