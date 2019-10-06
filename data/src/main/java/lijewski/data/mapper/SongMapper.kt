@@ -16,7 +16,8 @@ class SongMapper @Inject constructor() {
         return Song(
             artist = responseSong.artistName,
             title = responseSong.trackName,
-            year = parsedYear
+            year = parsedYear,
+            picUrl = responseSong.artworkUrl100
         )
     }
 

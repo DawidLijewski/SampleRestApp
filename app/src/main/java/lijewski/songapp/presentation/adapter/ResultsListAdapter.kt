@@ -9,8 +9,8 @@ import lijewski.songapp.R
 import lijewski.songapp.databinding.ItemSongBinding
 import java.util.*
 
-class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongItemViewHolder>() {
-    private val songList = ArrayList<Song>()
+class ResultsListAdapter(private val onItemClickedListener: OnItemClickedListener) : RecyclerView.Adapter<ResultsListAdapter.SongItemViewHolder>() {
+    private val resultList = ArrayList<Song>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -19,20 +19,24 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongItemViewHolder>
     }
 
     override fun onBindViewHolder(holder: SongItemViewHolder, position: Int) {
-        val song = songList[position]
-        holder.bind(song)
+        val result = resultList[position]
+        holder.bind(result)
+
+        holder.itemView.setOnClickListener {
+            onItemClickedListener.onItemClicked(result, position)
+        }
     }
 
     override fun getItemCount(): Int {
-        return songList.size
+        return resultList.size
     }
 
     fun updateSongList(songList: List<Song>?) {
         if (songList == null || songList.isEmpty()) {
-            this.songList.clear()
+            this.resultList.clear()
             notifyDataSetChanged()
         } else {
-            this.songList.addAll(0, songList)
+            this.resultList.addAll(0, songList)
             notifyItemInserted(0)
 
         }
@@ -42,5 +46,12 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongItemViewHolder>
         fun bind(song: Song) {
             binding.songObject = song
         }
+    }
+
+    /**
+     * Listener for item click interactions.
+     */
+    interface OnItemClickedListener {
+        fun onItemClicked(result: Song, position: Int)
     }
 }

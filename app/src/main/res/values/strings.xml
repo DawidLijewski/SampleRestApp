@@ -11,4 +11,6 @@
     <string name="cancel">Cancel</string>
     <string name="search_no_char">Search query cannot be empty!</string>
 
+    <string name="card_pic_description">Miniature image</string>
+
 </resources>

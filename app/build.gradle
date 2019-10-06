@@ -32,6 +32,10 @@ dependencies {
     // Timber
     implementation loggingDependencies.timber
 
+    //Glide
+    implementation glideDependencies.glide
+    kapt glideDependencies.glideKapt
+
     // Testing
     testImplementation testDependencies.values()
     androidTestImplementation testAndroidDependencies.values()

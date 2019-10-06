@@ -16,12 +16,13 @@ import lijewski.domain.entity.Song
 import lijewski.domain.entity.SongQuery
 import lijewski.songapp.R
 import lijewski.songapp.databinding.FragmentDashboardBinding
-import lijewski.songapp.presentation.adapter.SongListAdapter
+import lijewski.songapp.presentation.adapter.ResultsListAdapter
 import lijewski.songapp.presentation.dialog.SearchDialog
 import lijewski.songapp.presentation.dialog.SearchViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : Fragment(), ResultsListAdapter.OnItemClickedListener {
     companion object {
         const val TAG: String = "DashboardFragment"
     }
@@ -30,7 +31,7 @@ class DashboardFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var adapter: SongListAdapter
+    lateinit var adapter: ResultsListAdapter
 
     private lateinit var binding: FragmentDashboardBinding
 
@@ -94,6 +95,10 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.songs.observe(viewLifecycleOwner, Observer {
             onSongListUpdate(it)
         })
+    }
+
+    override fun onItemClicked(result: Song, position: Int) {
+        Timber.d("Clicked item title: %s", result.title)
     }
 
     private fun openSearchDialog() {
