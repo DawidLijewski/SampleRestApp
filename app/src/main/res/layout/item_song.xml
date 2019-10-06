@@ -12,48 +12,79 @@
             type="lijewski.domain.entity.Song" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        style="@style/ResultCardStyle">
+    <androidx.cardview.widget.CardView style="@style/ResultCardStyle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/card_pic"
+                android:layout_width="@dimen/card_artwork_width"
+                android:layout_height="@dimen/card_artwork_height"
+                android:contentDescription="@string/card_pic_description"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadImage="@{songObject.picUrl}" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/padding_start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/card_content_start_padding"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/padding_end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/card_content_padding"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/padding_top_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/card_content_padding"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/padding_bottom_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/card_content_padding"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/song_title"
                 style="@style/ResultCardTextStyle.Header"
                 android:text="@{songObject.title}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/card_pic"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/padding_end_guideline"
+                app:layout_constraintStart_toEndOf="@+id/padding_start_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/padding_top_guideline"
                 tools:text="Enjoy the Silence" />
 
             <TextView
                 android:id="@+id/song_artist"
                 style="@style/ResultCardTextStyle"
                 android:text="@{songObject.artist}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/card_pic"
-                app:layout_constraintTop_toBottomOf="@id/song_title"
+                app:layout_constraintBottom_toTopOf="@id/song_year"
+                app:layout_constraintEnd_toEndOf="@+id/padding_end_guideline"
+                app:layout_constraintStart_toEndOf="@+id/padding_start_guideline"
                 tools:text="Depeche Mode" />
 
             <TextView
                 android:id="@+id/song_year"
                 style="@style/ResultCardTextStyle"
                 android:text="@{songObject.year}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/card_pic"
-                app:layout_constraintTop_toBottomOf="@id/song_artist"
+                app:layout_constraintBottom_toTopOf="@+id/padding_bottom_guideline"
+                app:layout_constraintStart_toEndOf="@+id/padding_start_guideline"
                 tools:text="1990" />
-
-            <ImageView
-                android:id="@+id/card_pic"
-                android:layout_width="@dimen/card_artwork_width"
-                android:layout_height="@dimen/card_artwork_height"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:loadImage="@{songObject.picUrl}"
-                android:contentDescription="@string/card_pic_description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
