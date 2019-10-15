@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="lijewski.songapp.presentation.main.dashboard.DashboardViewModel" />
+            type="lijewski.samplerestapp.presentation.main.dashboard.DashboardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

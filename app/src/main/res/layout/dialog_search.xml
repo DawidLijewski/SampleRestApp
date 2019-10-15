@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="lijewski.songapp.presentation.dialog.SearchViewModel" />
+            type="lijewski.samplerestapp.presentation.dialog.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
