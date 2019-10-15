@@ -2,7 +2,6 @@ package lijewski.data.response
 
 import lijewski.domain.entity.Explicitness
 import lijewski.domain.entity.Kind
-import java.util.*
 
 data class RemoteResponse(
     val resultCount: Int,
@@ -35,7 +34,7 @@ data class RemoteResponse(
         val trackNumber: Int,
         val trackTimeMillis: Int?,
         val country: String,
-        val currency: Currency,
+        val currency: String,
         val primaryGenreName: String,
         val isStreamable: Boolean
     )
