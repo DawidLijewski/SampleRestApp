@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.AndroidSupportInjection
-import lijewski.domain.entity.Song
-import lijewski.domain.entity.SongQuery
+import lijewski.domain.entity.SearchQuery
+import lijewski.domain.entity.SearchResult
 import lijewski.songapp.R
 import lijewski.songapp.databinding.FragmentDashboardBinding
 import lijewski.songapp.presentation.adapter.ResultsListAdapter
@@ -80,24 +80,24 @@ class DashboardFragment : Fragment(), ResultsListAdapter.OnItemClickedListener {
             }
         })
 
-        dashboardViewModel.eventGetSearchData.observe(viewLifecycleOwner, Observer {
+        dashboardViewModel.eventGetQueryData.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 openSearchDialog()
             }
         })
 
-        dashboardViewModel.eventErrorDownloading.observe(viewLifecycleOwner, Observer {
+        dashboardViewModel.eventFetchError.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 showErrorToast()
             }
         })
 
-        dashboardViewModel.songs.observe(viewLifecycleOwner, Observer {
-            onSongListUpdate(it)
+        dashboardViewModel.searchResults.observe(viewLifecycleOwner, Observer {
+            onResultsListUpdate(it)
         })
     }
 
-    override fun onItemClicked(result: Song, position: Int) {
+    override fun onItemClicked(result: SearchResult, position: Int) {
         Timber.d("Clicked item title: %s", result.title)
     }
 
@@ -112,11 +112,11 @@ class DashboardFragment : Fragment(), ResultsListAdapter.OnItemClickedListener {
         toast.show()
     }
 
-    private fun onSearchDataReceived(data: SongQuery) {
-        dashboardViewModel.fetchSongsList(data)
+    private fun onSearchDataReceived(data: SearchQuery) {
+        dashboardViewModel.fetchSearchResultList(data)
     }
 
-    private fun onSongListUpdate(list: List<Song>) {
+    private fun onResultsListUpdate(list: List<SearchResult>) {
         adapter.updateSongList(list)
         binding.recyclerView.smoothScrollToPosition(0)
     }

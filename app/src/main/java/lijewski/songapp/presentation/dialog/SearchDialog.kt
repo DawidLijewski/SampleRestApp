@@ -57,7 +57,7 @@ class SearchDialog : AppCompatDialogFragment() {
         val btnSearch = view.findViewById<Button>(R.id.btn_search)
         btnSearch.setOnClickListener {
             if (searchViewModel.isQueryDataCorrect()) {
-                searchViewModel.querySong()
+                searchViewModel.queryForResults()
                 dismiss()
             }
         }

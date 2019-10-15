@@ -8,8 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="songObject"
-            type="lijewski.domain.entity.Song" />
+            name="searchResultObject"
+            type="lijewski.domain.entity.SearchResult" />
     </data>
 
     <androidx.cardview.widget.CardView style="@style/ResultCardStyle">
@@ -26,7 +26,7 @@
                 android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:loadImage="@{songObject.picUrl}" />
+                app:loadImage="@{searchResultObject.picUrl}" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/padding_start_guideline"
@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/song_title"
                 style="@style/ResultCardTextStyle.Header"
-                android:text="@{songObject.title}"
+                android:text="@{searchResultObject.title}"
                 app:layout_constraintEnd_toEndOf="@+id/padding_end_guideline"
                 app:layout_constraintStart_toEndOf="@+id/padding_start_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/padding_top_guideline"
@@ -72,7 +72,7 @@
             <TextView
                 android:id="@+id/song_artist"
                 style="@style/ResultCardTextStyle"
-                android:text="@{songObject.artist}"
+                android:text="@{searchResultObject.artist}"
                 app:layout_constraintBottom_toTopOf="@id/song_year"
                 app:layout_constraintEnd_toEndOf="@+id/padding_end_guideline"
                 app:layout_constraintStart_toEndOf="@+id/padding_start_guideline"
@@ -81,7 +81,7 @@
             <TextView
                 android:id="@+id/song_year"
                 style="@style/ResultCardTextStyle"
-                android:text="@{songObject.year}"
+                android:text="@{searchResultObject.year}"
                 app:layout_constraintBottom_toTopOf="@+id/padding_bottom_guideline"
                 app:layout_constraintStart_toEndOf="@+id/padding_start_guideline"
                 tools:text="1990" />

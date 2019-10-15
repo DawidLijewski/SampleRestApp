@@ -1,6 +1,6 @@
 package lijewski.domain.entity
 
-data class Song(
+data class SearchResult(
     var artist: String,
     var title: String?,
     var year: String?,

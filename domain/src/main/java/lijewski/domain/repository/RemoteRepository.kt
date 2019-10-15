@@ -1,9 +1,9 @@
 package lijewski.domain.repository
 
 import io.reactivex.Single
-import lijewski.domain.entity.Song
-import lijewski.domain.entity.SongQuery
+import lijewski.domain.entity.SearchQuery
+import lijewski.domain.entity.SearchResult
 
 interface RemoteRepository {
-    fun getSongList(songQuery: SongQuery): Single<List<Song>>
+    fun getSearchResultsList(searchQuery: SearchQuery): Single<List<SearchResult>>
 }

@@ -4,7 +4,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import lijewski.domain.entity.MediaType
-import lijewski.domain.entity.SongQuery
+import lijewski.domain.entity.SearchQuery
 import lijewski.songapp.presentation.internal.Event
 
 class SearchViewModel : ViewModel() {
@@ -14,7 +14,7 @@ class SearchViewModel : ViewModel() {
 
     val isQueryDataError = ObservableBoolean(false)
 
-    val eventQuerySong = MutableLiveData<Event<SongQuery>>()
+    val eventQuerySong = MutableLiveData<Event<SearchQuery>>()
 
     fun isQueryDataCorrect(): Boolean {
         return if (term.value.isNullOrBlank()) {
@@ -26,9 +26,9 @@ class SearchViewModel : ViewModel() {
         }
     }
 
-    fun querySong() {
+    fun queryForResults() {
         term.value?.let {
-            val query = SongQuery(it, null, MediaType.ALL)
+            val query = SearchQuery(it, null, MediaType.ALL)
             eventQuerySong.value = Event(query)
             isQueryDataError.set(true)
         }

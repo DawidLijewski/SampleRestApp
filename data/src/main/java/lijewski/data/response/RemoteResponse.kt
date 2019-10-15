@@ -6,9 +6,9 @@ import java.util.*
 
 data class RemoteResponse(
     val resultCount: Int,
-    val results: List<RemoteSong>
+    val results: List<RemoteResult>
 ) {
-    data class RemoteSong(
+    data class RemoteResult(
         val kind: Kind,
         val artistId: Int,
         val collectionId: Int,

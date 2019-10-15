@@ -2,7 +2,7 @@
     <string name="app_name">SongApp</string>
     <string name="action_settings">Settings</string>
     <string name="no_songs">No songs found</string>
-    <string name="error_fetch">Failed to fetch song list</string>
+    <string name="error_fetch">Failed to fetch searchResult list</string>
 
     <!-- Search Dialog -->
     <string name="search_remote">Search remote</string>

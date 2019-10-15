@@ -3,21 +3,24 @@ package lijewski.songapp.presentation.main.dashboard
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.schedulers.Schedulers
-import lijewski.domain.entity.Song
-import lijewski.domain.entity.SongQuery
-import lijewski.domain.usecase.RemoteSongListUseCase
+import lijewski.domain.entity.SearchQuery
+import lijewski.domain.entity.SearchResult
+import lijewski.domain.usecase.SearchUseCase
+import lijewski.songapp.di.module.RxModule
 import lijewski.songapp.presentation.internal.Event
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 class DashboardViewModel @Inject constructor(
-    private val remoteSongListUseCase: RemoteSongListUseCase
+    private val searchUseCase: SearchUseCase,
+    @Named(RxModule.IO) private val ioScheduler: Scheduler,
+    @Named(RxModule.MAIN) private val mainScheduler: Scheduler
 ) : ViewModel() {
-    val songs = MutableLiveData<List<Song>>()
+    val searchResults = MutableLiveData<List<SearchResult>>()
     val isLoading = ObservableBoolean(false)
     val isEmpty = ObservableBoolean(true)
     private val disposables = CompositeDisposable()
@@ -26,23 +29,23 @@ class DashboardViewModel @Inject constructor(
         disposables.clear()
     }
 
-    fun fetchSongsList(songQuery: SongQuery) {
-        remoteSongListUseCase.getSongs(songQuery)
-            .subscribeOn(Schedulers.io())
+    fun fetchSearchResultList(searchQuery: SearchQuery) {
+        searchUseCase.execute(searchQuery)
+            .subscribeOn(ioScheduler)
+            .observeOn(mainScheduler)
             .doOnSubscribe { isLoading.set(true) }
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe { handleGetSongsResult(it) }
             .addTo(disposables)
     }
 
-    private fun handleGetSongsResult(result: RemoteSongListUseCase.Result) {
+    private fun handleGetSongsResult(result: SearchUseCase.Result) {
         isLoading.set(false)
         when (result) {
-            is RemoteSongListUseCase.Result.Success -> {
-                songs.value = result.songs
+            is SearchUseCase.Result.Success -> {
+                searchResults.value = result.searchResults
                 isEmpty.set(false)
             }
-            is RemoteSongListUseCase.Result.Failure -> {
+            is SearchUseCase.Result.Failure -> {
                 isEmpty.set(true)
                 Timber.e(result.throwable)
                 displayFetchError()
@@ -50,15 +53,15 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    val eventGetSearchData = MutableLiveData<Event<Any>>()
+    val eventGetQueryData = MutableLiveData<Event<Any>>()
 
-    fun getSearchData() {
-        eventGetSearchData.value = Event(Any())
+    fun getQueryData() {
+        eventGetQueryData.value = Event(Any())
     }
 
-    val eventErrorDownloading = MutableLiveData<Event<Any>>()
+    val eventFetchError = MutableLiveData<Event<Any>>()
 
     private fun displayFetchError() {
-        eventErrorDownloading.value = Event(Any())
+        eventFetchError.value = Event(Any())
     }
 }

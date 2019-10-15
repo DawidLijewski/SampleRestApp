@@ -4,10 +4,7 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import lijewski.songapp.SongApp
-import lijewski.songapp.di.module.AppModule
-import lijewski.songapp.di.module.BuilderModule
-import lijewski.songapp.di.module.NetworkModule
-import lijewski.songapp.di.module.RepositoryModule
+import lijewski.songapp.di.module.*
 import javax.inject.Singleton
 
 @Singleton
@@ -17,7 +14,8 @@ import javax.inject.Singleton
         AppModule::class,
         BuilderModule::class,
         NetworkModule::class,
-        RepositoryModule::class
+        RepositoryModule::class,
+        RxModule::class
     ]
 )
 interface AppComponent : AndroidInjector<SongApp> {
