@@ -2,15 +2,15 @@ package lijewski.data.network
 
 import io.reactivex.Single
 import lijewski.data.response.RemoteResponse
-import lijewski.domain.entity.SongQuery
+import lijewski.domain.entity.SearchQuery
 import javax.inject.Inject
 
 class RemoteApi @Inject constructor(private val remoteEndpoint: RemoteEndpoint) {
 
-    fun getSongsResponse(songQuery: SongQuery): Single<RemoteResponse> {
+    fun getRemoteResponse(searchQuery: SearchQuery): Single<RemoteResponse> {
         return remoteEndpoint.getSearchResults(
-            songQuery.term,
-            songQuery.country,
-            songQuery.media.value)
+            searchQuery.term,
+            searchQuery.country,
+            searchQuery.media.value)
     }
 }

@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="lijewski.songapp.presentation.main.dashboard.DashboardViewModel" />
+            type="lijewski.samplerestapp.presentation.main.dashboard.DashboardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:onClick="@{() ->viewModel.getSearchData()}"
+            android:onClick="@{() ->viewModel.getQueryData()}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@android:drawable/ic_menu_search" />

@@ -4,7 +4,7 @@ apply from: '../buildsystem/android_commons.gradle'
 
 android {
     defaultConfig {
-        applicationId "lijewski.songapp"
+        applicationId "lijewski.samplerestapp"
         buildConfigField 'String', 'BASE_URL', "\"https://itunes.apple.com/\""
     }
 }
