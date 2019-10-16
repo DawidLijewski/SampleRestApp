@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="lijewski.samplerestapp.presentation.dialog.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/card_padding">
 
-    <EditText
+        <EditText
             android:id="@+id/search_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_hint"
+            android:importantForAutofill="no"
             android:inputType="text"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="@={viewModel.term}"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <requestFocus />
+        </EditText>
 
-    <CheckBox
-            android:id="@+id/checkbox_remote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/search_remote"
-            android:checked="true"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/search_edit_text"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
+        <TextView
             android:id="@+id/text_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_no_char"
-            android:visibility="invisible"
             android:textColor="@android:color/holo_red_light"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_remote"
             app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible"/>
+            app:layout_constraintTop_toBottomOf="@id/search_edit_text"
+            app:visibleInvisible="@{viewModel.isQueryDataError}"
+            tools:visibility="visible" />
 
-    <Button
+        <Button
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search"
-            app:layout_constraintTop_toBottomOf="@id/text_error"
+            app:layout_constraintEnd_toStartOf="@id/btn_cancel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_cancel"/>
+            app:layout_constraintTop_toBottomOf="@id/text_error" />
 
-    <Button
+        <Button
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
-            app:layout_constraintTop_toBottomOf="@id/text_error"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_search"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/text_error" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

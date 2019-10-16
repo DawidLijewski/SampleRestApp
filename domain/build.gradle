@@ -2,24 +2,23 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     //Kotlin
-    implementation "io.reactivex.rxjava2:rxandroid:${rx_android2_version}"
-    implementation "io.reactivex.rxjava2:rxjava:${rx_java2_version}"
+    implementation kotlinDependencies.values()
+
+    //RxJava
+    implementation rxJavaDependencies.values()
 
     // Dagger
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation daggerDependencies.dagger
+    kapt daggerKaptDependencies.daggerKapt
 
     // Timber
-    implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation loggingDependencies.timber
 
     // Testing
-    testImplementation "junit:junit:$junit_version"
-
+    testImplementation testDependencies.values()
 }
